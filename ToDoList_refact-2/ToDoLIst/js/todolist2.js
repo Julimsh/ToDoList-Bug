@@ -5,7 +5,7 @@ let todolist = [];
 $(document).ready(function() {
     $("#titolo").val('');
     $("#testo").val('');
-    $("ul").val(''); // non funziona, da rivedere;
+    $(".lista ul").children().remove(); // non funziona, da rivedere;
 
     stampaTodo();
 
@@ -46,23 +46,36 @@ function stampaTodo() {
     // }); // FINE EACH
 
 
-    // NON FUNZIONA, CANCELLA SOLO IL 1° ELEMENTO (non importa quale si clicchi)
+    // FUNZIONA!
     let i = 0;
     todolist.forEach((todo) => {
         let li = $("<li></li>");
         li.addClass("list-group-item");
         li.html(todo.titolo + " - " + todo.testo);
-        li.append(`<span id="rimuovi" class="btn btn-sm btn-danger float-end" class="${i}">X</span>`); // al 1° giro è 0
-        //('<span class="btn btn-sm btn-danger float-end">X</span>');
+        li.append(`<span id="${i}" class="btn btn-sm btn-danger float-end">X</span>`); // al 1° giro è 0
         lista.append(li); // La stampa funziona;
-        i++; // poi si incrementa dopo la stampa
-        lista.children().on("click", "#rimuovi", function() { // Mi piazzo sui figli di UL, cioè LI
-            $(this).closest('li').remove(); // il this si posiziona sull'ID Rimuovi e cancella la LI
-            var classe = $(this).attr("class"); // a questa variabile memorizzo ${i}; (ma avendo una class con le istruzioni di bootstrap, creerà casini? Lo leggerà lo stesso?)
-            todolist.splice(classe, 1); // per l'array todolist, usando "classe" (che ha ${i} memorizzato) e lavorando su un elemento alla volta "SPLICE"
+        console.log("alla stampa" + todolist)
+        i++; // poi si incrementa dopo la stampa, perché l'id deve andare avanti;
+
+        li.children().on("click", $(i), function() { // Mi piazzo sui figli di UL, cioè LI
+            $(this).closest('li').remove(); // il this si posiziona sull'ID "i"" e cancella la LI
+
+            var classe = $(this).attr("id"); // a questa variabile memorizzo ${i};
+            todolist.splice(classe, 1); // per l'array todolist, usando la variabile "classe" (che ha ${i} memorizzato) e lavorando su un elemento alla volta "SPLICE"
+            console.log("al rimuovi" + todolist);
+
             localStorage.setItem("listaTodo", JSON.stringify(todolist));
             stampaTodo(); // siccome il localStorage cambia, devo stampare nuovamente la lista;
         });
     }); // FINE EACH
+
+    // FUNZIONI PER SVUOTARE I CAMPI AL FOCUS
+    $("#titolo").on("focus", function() {
+        $("#titolo").val('')
+    });
+
+    $("#testo").on("focus", function() {
+        $("#testo").val('')
+    });
 
 }

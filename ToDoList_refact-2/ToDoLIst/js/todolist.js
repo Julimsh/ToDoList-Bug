@@ -64,7 +64,7 @@ let stampaTodo = () => {
             // o includendo facoltativamente solo le proprietà specificate se viene specificata una matrice sostitutiva. 
             // FINE NOTE
 
-            stampaTodo(); // l'invocazione è dentro la funzione stessa?
+            stampaTodo(); // siccome il localStorage cambia, devo stampare nuovamente la lista;
         })
     });
 }
