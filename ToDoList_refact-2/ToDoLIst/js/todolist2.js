@@ -5,7 +5,7 @@ let todolist = [];
 $(document).ready(function() {
     $("#titolo").val('');
     $("#testo").val('');
-    $(".lista ul").children().remove(); // non funziona, da rivedere;
+    localStorage.clear(); // non funziona, da rivedere;
 
     stampaTodo();
 
