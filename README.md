@@ -1,2 +1,3 @@
 # ToDoList-Bug
-Progetto non ancora finito. Da lavorare sull'Each.
+Funziona! 
+Da rivedere la pulizia all'aggiornamento pagina (non riesco (ancora) a pulire la UL/LI precedente)
